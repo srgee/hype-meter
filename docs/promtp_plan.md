@@ -10,27 +10,20 @@ Hypemeter is a minimalist web application that quantifies the "hype level" of an
 
 ## 2. Core Functional Requirements
 
-    Search-First Experience: Google-like clean search bar using HTMX.
-
-    Scoring Logic: Weighted average (50% Google Trends, 30% Social, 20% News).
-
-    Visualization: 7-Day pulse graph using Chart.js.
-
-    Performance: "Cache-first" architecture (24h TTL) to minimize API calls.
+- Search-First Experience: Google-like clean search bar using HTMX.
+- Scoring Logic: Weighted average (50% Google Trends, 30% Social, 20% News).
+- Visualization: 7-Day pulse graph using Chart.js.
+- Performance: "Cache-first" architecture (24h TTL) to minimize API calls.
 
 ## 3. Implementation Strategy (The "Steel Thread")
 
 We will build this in 5 distinct phases to ensure stability:
 
-    Foundation: Project setup with modern 2026 standards (uv, apps/ folder).
-
-    The Core (Mocked): Database models and a service layer returning fake data to test the flow.
-
-    The UI: HTMX frontend to display the fake data.
-
-    The Flesh: Replacing fake data with real APIs (Trends, News, Social) one by one.
-
-    The Polish: Adding the Chart.js visualization and error handling.
+1. Foundation: Project setup with modern 2026 standards (uv, apps/ folder). Project boilerplate is doen manually.
+2. The Core (Mocked): Database models and a service layer returning fake data to test the flow.
+3. The UI: HTMX frontend to display the fake data.
+4. The Flesh: Replacing fake data with real APIs (Trends, News, Social) one by one.
+5. The Polish: Adding the Chart.js visualization and error handling.
 
 # Part 2: Implementation Prompts for LLM
 
