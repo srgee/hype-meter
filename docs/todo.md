@@ -2,11 +2,10 @@
 
 ## Phase 1: Backend Infrastructure (FastAPI & Redis)
 
-- [ ] **Project Initialization**
-  - [ ] Initialize Git repository (`git init`).
-  - [ ] Create virtual environment (`python -m venv venv`).
-  - [ ] Install dependencies: `fastapi`, `uvicorn`, `redis`, `pydantic-settings`, `pytrends`, `atproto`, `newsapi-python`, `httpx`.
-  - [ ] Create `requirements.txt`.
+- [x] **Project Initialization**
+  - [x] Initialize Git repository (`git init`).
+  - [x] Create virtual environment (`python -m venv venv`).
+  - [x] Install dependencies: `fastapi`, `uvicorn`, `redis`, `pydantic-settings`, `pytrends`, `atproto`, `newsapi-python`, `httpx`.
 
 - [ ] **Core Setup**
   - [ ] Create `backend/main.py` (FastAPI app entry point).

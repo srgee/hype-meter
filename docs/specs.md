@@ -34,9 +34,9 @@ The **Total Hype Score ($S$)** is a weighted average of three data streams, norm
 ## 3. Technical Architecture
 
 ### 3.1 Platform & Stack
-* **Type:** Responsive Web Application (Single Page Application).
+* **Type:** Responsive Web Application using full-stack framework (Django).
 * **Database:** Redis or PostgreSQL for caching.
-* **Frontend:** React, Vue, or Next.js for real-time UI updates.
+* **Frontend:** Use HTMX for adding interactivity, no heavy fornt-end framewoks.
 
 ### 3.2 Data Handling & Caching
 To manage API costs and ensure performance for a free tool:
