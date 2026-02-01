@@ -1,101 +1,65 @@
-# Hypemeter Development Checklist
+@ 🚀 Plan de Implementación: Hypemeter
 
-## Phase 1: Backend Infrastructure (FastAPI & Redis)
+Este plan divide el desarrollo en pasos atómicos. Cada tarea debe completarse y verificarse antes de pasar a la siguiente para garantizar la integridad del sistema.
 
-- [x] **Project Initialization**
-  - [x] Initialize Git repository (`git init`).
-  - [x] Create virtual environment (`python -m venv venv`).
-  - [x] Install dependencies: `fastapi`, `uvicorn`, `redis`, `pydantic-settings`, `pytrends`, `atproto`, `newsapi-python`, `httpx`.
+## Fase 1: Cimientos y Configuración (Foundations)
 
-- [ ] **Core Setup**
-  - [ ] Create `backend/main.py` (FastAPI app entry point).
-  - [ ] Create `backend/config.py` using Pydantic BaseSettings.
-    - [ ] Define `REDIS_URL`.
-    - [ ] Define `NEWS_API_KEY`.
-    - [ ] Define `BLUESKY_USERNAME` & `BLUESKY_PASSWORD`.
-  - [ ] Create `.env` file (add to `.gitignore`).
+    [x] Inicialización del entorno: Configurar el proyecto con uv, crear pyproject.toml y establecer la estructura de directorios (apps/, config/).
 
-- [ ] **Database Connection**
-  - [ ] Set up local Redis instance (Docker or local install).
-  - [ ] Create `backend/database.py` with async Redis client setup.
-  - [ ] Write `get_cache` dependency function.
-  - [ ] **Test:** Implement `GET /health` endpoint returning Redis connection status.
+    [x] Base de Datos y Core: Crear apps.core.models.TimestampedModel como clase base abstracta.
 
-## Phase 2: Data Ingestion Layers
+    [] App de Tópicos: Crear la aplicación apps.topics y definir el modelo Topic con campos para el score, nombre e historial (JSON).
 
-- [ ] **Google Trends Service**
-  - [ ] Create `backend/services/trends.py`.
-  - [ ] Implement `fetch_google_trends(keyword)` using `pytrends`.
-  - [ ] Add error handling (Rate limits/429, Empty data).
-  - [ ] Normalize output (0-100 scale).
-  - [ ] **Test:** specific endpoint `GET /api/test/trends/{keyword}`.
+    [ ] 1.5 Verificación de Persistencia: Realizar migraciones y registrar el modelo en el Admin de Django para pruebas manuales.
 
-- [ ] **Bluesky Service (Social)**
-  - [ ] Create `backend/services/social.py`.
-  - [ ] Implement auth/session management for Bluesky.
-  - [ ] Implement `fetch_bluesky_volume(keyword)` (count posts in last 7 days).
-  - [ ] Apply normalization logic (e.g., 1000 posts = 100 score).
-  - [ ] **Test:** specific endpoint `GET /api/test/social/{keyword}`.
+## Fase 2: El Motor de Hype (Logic & Service Layer)
 
-- [ ] **NewsAPI Service (Media)**
-  - [ ] Create `backend/services/news.py`.
-  - [ ] Implement `fetch_news_volume(keyword)` using `NewsApiClient`.
-  - [ ] Apply normalization logic (e.g., 50 articles = 100 score).
-  - [ ] **Test:** specific endpoint `GET /api/test/news/{keyword}`.
+    [ ] 2.1 Definición de Interfaces: Crear la estructura en apps.ingestion para los proveedores de datos (Google, News, Social).
 
-## Phase 3: The Hype Engine & Logic
+    [ ] 2.2 Motor de Hype (Mock): Crear el servicio HypeEngine en apps.topics.services que devuelva datos simulados para validar el flujo sin depender de APIs externas.
 
-- [ ] **Scoring Algorithm**
-  - [ ] Create `backend/services/engine.py`.
-  - [ ] Implement `calculate_hype(keyword)`:
-    - [ ] Run all 3 services in parallel using `asyncio.gather`.
-    - [ ] Apply weights: Trends (50%), Social (30%), News (20%).
-    - [ ] Calculate final integer score (0-100).
+    [ ] 2.3 Lógica de Caché (TTL): Implementar la regla de negocio: "Si el dato existe y tiene < 24 horas, no volver a consultar APIs".
 
-- [ ] **Caching Layer**
-  - [ ] Implement caching logic in `engine.py` or `main.py`:
-    - [ ] Check Redis for key `hype:{keyword}`.
-    - [ ] If exists: Return JSON.
-    - [ ] If missing: Run calculation -> Save to Redis (TTL 86400s) -> Return JSON.
+    [ ] 2.4 Tests Unitarios de Lógica: Verificar que el motor respeta la caché y calcula correctamente los umbrales de estado (Viral/Neutral/Dead).
 
-- [ ] **Main API Endpoint**
-  - [ ] Create `GET /api/hype/{keyword}`.
-  - [ ] Define response model (Pydantic schema):
-    - [ ] `score` (int)
-    - [ ] `label` (Viral/Neutral/Dead)
-    - [ ] `history` (List[int])
-    - [ ] `breakdown` (Dict)
-  - [ ] **Test:** Verify data consistency and cache hit/miss behavior.
+## Fase 3: Ingestión de Datos Reales (Data Providers)
 
-## Phase 4: Frontend Development (Next.js)
+    [ ] 3.1 Integración Google Trends: Implementar el proveedor para medir el interés de búsqueda (50% del peso).
 
-- [ ] **Setup**
-  - [ ] Initialize Next.js project (`npx create-next-app@latest`).
-  - [ ] Configure Tailwind CSS.
-  - [ ] Install icons (`lucide-react`) and charts (`recharts`).
+    [ ] 3.2 Integración NewsAPI: Implementar el proveedor de volumen de noticias (20% del peso).
 
-- [ ] **Components**
-  - [ ] Create `components/SearchInput.tsx` (Centered, minimal).
-  - [ ] Create `components/HypeCard.tsx` (Score display, Label styling).
-  - [ ] Create `components/HypeGraph.tsx` (Recharts LineChart implementation).
-  - [ ] Create `components/Loader.tsx` ("Analyzing..." animation).
+    [ ] 3.3 Integración Bluesky: Implementar el proveedor de conversación social (30% del peso).
 
-- [ ] **State & Logic**
-  - [ ] Create `lib/api.ts` fetcher function.
-  - [ ] Implement `page.tsx`:
-    - [ ] Manage `loading`, `data`, `error` states.
-    - [ ] Handle API errors (404/500).
-    - [ ] Implement "Viral" vs "Dead" color coding (Red vs Gray).
+    [ ] 3.4 Algoritmo de Normalización: Desarrollar la función que unifica las tres fuentes en una escala de 0 a 100.
 
-## Phase 5: Polish & Deployment Prep
+    [ ] 3.5 Conexión de Capas: Sustituir los datos "mock" del HypeEngine por las llamadas reales a los proveedores de ingestión.
 
-- [ ] **Comparisons (Bonus)**
-  - [ ] Implement logic to show "Compared to: [Competitor]" on the result card.
+## Fase 4: Interfaz de Usuario e Interactividad (Frontend & HTMX)
 
-- [ ] **Optimization**
-  - [ ] specific Mobile responsiveness check (Graph readability).
-  - [ ] Rate limiting on Backend (FastAPI-Limiter) to prevent abuse.
+    [ ] 4.1 Layout y Estilos: Configurar base.html con Tailwind CSS y HTMX.
 
-- [ ] **Final Review**
-  - [ ] Run full end-to-end test (Search -> Animation -> Result).
-  - [ ] Verify Redis cache expires correctly.
+    [ ] 4.2 Vista de Búsqueda: Crear la Home con una barra de búsqueda centrada y limpia.
+
+    [ ] 4.3 Estados de Carga: Implementar hx-indicator para mostrar una animación de "Analizando..." mientras el servidor procesa las APIs.
+
+    [ ] 4.4 Partial de Resultados: Diseñar el fragmento HTML que devuelve el servidor con el score y el label dinámico de estado.
+
+## Fase 5: Análisis Visual y Comparativas (Data Visualization)
+
+    [ ] 5.1 Integración de Gráficos: Configurar Chart.js para renderizar el historial de 7 días almacenado en el JSON del modelo.
+
+    [ ] 5.2 Lógica de Peer-Comparison: Desarrollar la función que busque tópicos relacionados o de referencia para dar contexto al score.
+
+    [ ] 5.3 UI de Comparativa: Mostrar los tópicos relacionados como elementos interactivos bajo el score principal.
+
+    [ ] 5.4 Optimización Móvil: Asegurar que el gráfico y la interfaz sean 100% responsivos.
+
+## Fase 6: Resiliencia y Despliegue (Robustness)
+
+    [ ] 6.1 Gestión de Fallos de API: Implementar un sistema de degradación graciosa (si una API falla, calcular con las restantes o usar caché antigua).
+
+    [ ] 6.2 Rate Limiting: Añadir protección contra abusos en el buscador (limitar peticiones por IP).
+
+    [ ] 6.3 Sanitización: Reforzar la limpieza de entradas para evitar inyecciones o términos malformados en las APIs.
+
+    [ ] 6.4 Configuración de Producción: Configurar WhiteNoise para estáticos y preparar el entorno para Gunicorn/Uvicorn.
