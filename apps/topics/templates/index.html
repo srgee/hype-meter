@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class='columns is-centered'>
+    <div class='column is-half'>
+        <div class='box has-text-centered'>
+            <h1 class='title'>Mide el Hype</h1>
+            <p class='subtitle'>Introduce una tendencia para analizar su impacto.</p>
+
+            <form hx-post="{% url 'topics:analyze' %}" 
+                  hx-target='#result-container' 
+                  hx-indicator='#loading-spinner'>
+                <div class='field has-addons has-addons-centered'>
+                    <div class='control is-expanded'>
+                        <input name='keyword' class='input is-large' type='text' placeholder='Ej: Bitcoin, Python, AI...'>
+                    </div>
+                    <div class='control'>
+                        <button type='submit' class='button is-primary is-large'>Analizar</button>
+                    </div>
+                </div>
+            </form>
+
+            <div id='loading-spinner' class='htmx-indicator mt-4'>
+                <progress class='progress is-small is-primary' max='100'>Cargando...</progress>
+                <p class='is-size-7'>Consultando fuentes globales...</p>
+            </div>
+        </div>
+
+        <div id='result-container'></div>
+    </div>
+</div>
+{% endblock %}
