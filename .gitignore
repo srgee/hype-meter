@@ -9,3 +9,6 @@ wheels/
 # Virtual environments
 .venv
 .aider*
+
+.env
+db.sqlite3
