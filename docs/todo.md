@@ -10,11 +10,13 @@ Este plan divide el desarrollo en pasos atómicos. Cada tarea debe completarse y
 
     [x] App de Tópicos: Crear la aplicación apps.topics y definir el modelo Topic con campos para el score, nombre e historial (JSON).
 
-    [x] 1.5 Verificación de Persistencia: Realizar migraciones y registrar el modelo en el Admin de Django para pruebas manuales.
+    [x] Verificación de Persistencia: Realizar migraciones y registrar el modelo en el Admin de Django para pruebas manuales.
+
+    [x] Pruebas Unitarias: Crear pruebas unitarias para el modelo Topic.
 
 ## Fase 2: El Motor de Hype (Logic & Service Layer)
 
-    [ ] 2.1 Definición de Interfaces: Crear la estructura en apps.ingestion para los proveedores de datos (Google, News, Social).
+    [ ] Definición de Interfaces: Crear la estructura en apps.ingestion para los proveedores de datos (Google, Social).
 
     [ ] 2.2 Motor de Hype (Mock): Crear el servicio HypeEngine en apps.topics.services que devuelva datos simulados para validar el flujo sin depender de APIs externas.
 
