@@ -16,13 +16,13 @@ Este plan divide el desarrollo en pasos atómicos. Cada tarea debe completarse y
 
 ## Fase 2: El Motor de Hype (Logic & Service Layer)
 
-    [ ] Definición de Interfaces: Crear la estructura en apps.ingestion para los proveedores de datos (Google, Social).
+    [x] Definición de Interfaces: Crear la estructura en apps.ingestion para los proveedores de datos (Google, Social).
 
-    [ ] 2.2 Motor de Hype (Mock): Crear el servicio HypeEngine en apps.topics.services que devuelva datos simulados para validar el flujo sin depender de APIs externas.
+    [x] 2.2 Motor de Hype (Mock): Crear el servicio HypeEngine en apps.topics.services que devuelva datos simulados para validar el flujo sin depender de APIs externas.
 
-    [ ] 2.3 Lógica de Caché (TTL): Implementar la regla de negocio: "Si el dato existe y tiene < 24 horas, no volver a consultar APIs".
+    [x] 2.3 Lógica de Caché (TTL): Implementar la regla de negocio: "Si el dato existe y tiene < 24 horas, no volver a consultar APIs".
 
-    [ ] 2.4 Tests Unitarios de Lógica: Verificar que el motor respeta la caché y calcula correctamente los umbrales de estado (Viral/Neutral/Dead).
+    [x] 2.4 Tests Unitarios de Lógica: Verificar que el motor respeta la caché y calcula correctamente los umbrales de estado (Viral/Neutral/Dead).
 
 ## Fase 3: Ingestión de Datos Reales (Data Providers)
 

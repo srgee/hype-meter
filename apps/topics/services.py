@@ -31,7 +31,7 @@ class HypeEngine:
         Queries available data providers and updates persistance.
         '''
         google_score = self.providers['google'].fetch_score(keyword)
-        bluesky_score = self.providers['social'].fetch_score(keyword)
+        bluesky_score = self.providers['bluesky'].fetch_score(keyword)
         
         # Calculate weighted average
         final_score = int((google_score * 0.6) + (bluesky_score * 0.4))
