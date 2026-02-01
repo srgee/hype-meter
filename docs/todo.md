@@ -10,7 +10,7 @@ Este plan divide el desarrollo en pasos atómicos. Cada tarea debe completarse y
 
     [x] App de Tópicos: Crear la aplicación apps.topics y definir el modelo Topic con campos para el score, nombre e historial (JSON).
 
-    [ ] 1.5 Verificación de Persistencia: Realizar migraciones y registrar el modelo en el Admin de Django para pruebas manuales.
+    [x] 1.5 Verificación de Persistencia: Realizar migraciones y registrar el modelo en el Admin de Django para pruebas manuales.
 
 ## Fase 2: El Motor de Hype (Logic & Service Layer)
 

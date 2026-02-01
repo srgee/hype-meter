@@ -9,8 +9,11 @@ class TopicManager(models.Manager):
     at the persistence layer.
     '''
     def update_hype_data(self, keyword, score, history_data):
+        clean_keyword = keyword.strip() if keyword else ''
+        if len(clean_keyword) == 0:
+            raise ValueError('The keyword (name) cannot be empty.')
         topic, created = self.update_or_create(
-            name=keyword.lower().strip(),
+            name=clean_keyword.lower(),
             defaults={
                 'score': score,
                 'history_data': history_data
@@ -69,4 +72,4 @@ class Topic(TimeStampedModel):
         '''
         from django.utils import timezone
         from datetime import timedelta
-        return timezone.now() > self.updated_at + timedelta(hours=24)
+        return timezone.now() > (self.updated_at + timedelta(hours=24))

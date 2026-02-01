@@ -9,7 +9,7 @@ class TimeStampedModel(models.Model):
         auto_now_add=True,
         db_index=True,
     )
-    updated_at = models.DateField(
+    updated_at = models.DateTimeField(
         'Last modification',
         auto_now_add=True,
     )

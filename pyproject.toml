@@ -11,6 +11,13 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "freezegun>=1.5.5",
     "pytest>=9.0.1,<10",
+    "pytest-django>=4.11.1",
     "ruff==0.14.14",
 ]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+DJANGO_SETTINGS_MODULE = "config.settings"
