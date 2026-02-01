@@ -1,0 +1,25 @@
+<div class='box animate__animated animate__fadeIn'>
+    <div class='level'>
+        <div class='level-item has-text-centered'>
+            <div>
+                <p class='heading'>Palabra Clave</p>
+                <p class='title is-capitalize'>{{ topic.name }}</p>
+            </div>
+        </div>
+        <div class='level-item has-text-centered'>
+            <div>
+                <p class='heading'>Hype Score</p>
+                <p class='title 
+                    {% if topic.score >= 90 %}has-text-danger
+                    {% elif topic.score >= 50 %}has-text-success
+                    {% else %}has-text-grey{% endif %}'>
+                    {{ topic.score }}/100
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class='notification is-light has-text-centered'>
+        <strong>Estado:</strong> {{ topic.status_label }}
+    </div>
+</div>
