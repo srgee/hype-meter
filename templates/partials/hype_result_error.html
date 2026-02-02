@@ -1,0 +1,21 @@
+<div id="error-message" class="notification is-danger is-light animate__animated animate__shakeX">
+    <button class="delete" onclick="this.parentElement.remove()"></button>
+    <div class="is-flex is-align-items-center">
+        <span class="icon is-large mr-3">
+            <i class="fas fa-exclamation-triangle fa-2x"></i>
+        </span>
+        <div>
+            <strong>¡Ups! Algo no salió bien</strong><br>
+            {{ message|default:"No pudimos procesar tu búsqueda. Inténtalo de nuevo con otra palabra." }}
+        </div>
+    </div>
+</div>
+
+<script>
+    // Error message will disappear automatically after 15 seconds
+    setTimeout(() => {
+        const err = document.getElementById('error-message');
+        if(err) err.classList.add('animate__fadeOut');
+        setTimeout(() => err?.remove(), 1000);
+    }, 15000);
+</script>
