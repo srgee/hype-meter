@@ -1,0 +1,18 @@
+<aside class="menu">
+    <ul class="menu-list">
+        {% for item in recent_topics %}
+        <li>
+            <a class="is-flex is-justify-content-space-between" 
+               hx-post="{% url 'topics:analyze' %}?keyword={{ item.name }}"
+               hx-target="#result-container">
+                <span class="is-capitalize">{{ item.name }}</span>
+                <span class="tag {% if item.score >= 50 %}is-success{% else %}is-light{% endif %}">
+                    {{ item.score }}
+                </span>
+            </a>
+        </li>
+        {% empty %}
+        <li class="has-text-grey-light">No hay búsquedas aún.</li>
+        {% endfor %}
+    </ul>
+</aside>

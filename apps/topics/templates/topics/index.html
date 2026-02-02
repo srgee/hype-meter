@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class='columns is-centered'>
-    <div class='column is-half'>
+<div class='columns'>
+    <div class='column is-8'>
         <div class='box has-text-centered'>
             <h1 class='title'>Mide el Hype</h1>
             <p class='subtitle'>Introduce un término para analizar su viralidad.</p>
 
             <form hx-post="{% url 'topics:analyze' %}" 
                   hx-target='#result-container' 
-                  hx-indicator='#loading-spinner'>
+                  hx-indicator='#loading-spinner'
+                  hx-on::after-request="htmx.trigger('#recent-list', 'refresh-recent')">
                 <div class='field has-addons has-addons-centered'>
                     <div class='control is-expanded'>
                         <input name='keyword' class='input is-large' type='text' placeholder='Ej: Bitcoin, Python, AI...'>
@@ -27,6 +28,21 @@
         </div>
 
         <div id='result-container'></div>
+    </div>
+
+    <div class='column is-4'>
+        <div class='card'>
+            <header class='card-header is-primary'>
+                <p class='card-header-title'>🔥 Tendencias Recientes</p>
+            </header>
+            <div class='card-content'>
+                <div id='recent-list' 
+                     hx-get="{% url 'topics:recent' %}" 
+                     hx-trigger='load, refresh-recent from:body'>
+                    <p class='has-text-grey-light'>Cargando historial...</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

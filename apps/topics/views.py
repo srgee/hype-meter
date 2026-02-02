@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from .services import HypeEngine
+from .models import Topic
 
 
 engine = HypeEngine()
@@ -23,3 +24,8 @@ def analyze_topic(request):
         return render(request, 'partials/hype_result.html', {'topic': topic})
 
     return render(request, 'topics/index.html', {'topic': topic})
+
+def get_recent_topics(request):
+    '''Devuelve una lista con los 10 temas más recientes basados en updated_at'''
+    recent = Topic.objects.all().order_by('-updated_at')[:10]
+    return render(request, 'partials/recent_list.html', {'recent_topics': recent})
