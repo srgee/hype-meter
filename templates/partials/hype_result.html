@@ -18,8 +18,47 @@
             </div>
         </div>
     </div>
+
+    <div class='mt-5'>
+        <canvas id='hypeChart' width='400' height='200'></canvas>
+    </div>
     
     <div class='notification is-light has-text-centered'>
         <strong>Estado:</strong> {{ topic.status_label }}
     </div>
 </div>
+
+<script>
+    (function() {
+        const ctx = document.getElementById('hypeChart').getContext('2d');
+        
+        // Extraemos los datos del JSON guardado en history_data (vienen de Google Trends)
+        const history = {{ topic.history_data.google|safe }};
+        
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: history.labels,
+                datasets: [{
+                    label: 'Interés en el tiempo (Google Trends)',
+                    data: history.values,
+                    borderColor: '#00d1b2', // Color primary de Bulma
+                    backgroundColor: 'rgba(0, 209, 178, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, max: 100 },
+                    x: { ticks: { maxTicksLimit: 10 } }
+                }
+            }
+        });
+    })();
+</script>
