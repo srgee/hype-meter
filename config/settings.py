@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'apps.core',
+    'apps.core.apps.CoreConfig',
     'apps.topics',
     
 ]
@@ -120,11 +120,6 @@ LOGGING = {
             'format': '%(levelname)s %(asctime)s %(name)s %(message)s',
         },
     },
-    'filters': {
-        'request_id_filter': {
-            '()': 'apps.core.log_filters.RequestContextFilter',
-        },
-    },
     'handlers': {
         'stdout': {
             'class': 'logging.StreamHandler',
@@ -137,6 +132,11 @@ LOGGING = {
             'stream': 'ext://sys.stderr',
             'level': 'ERROR',
             'formatter': 'json',
+        },
+    },
+    'filters': {
+        'request_id_filter': {
+            '()': 'apps.core.log_filters.RequestContextFilter',
         },
     },
     'loggers': {

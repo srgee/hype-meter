@@ -8,11 +8,10 @@ class RequestContextMiddleware:
     def __call__(self, request):
         rid = request.headers.get('X-Request-ID', str(uuid.uuid4()))
         
-        token = request_id_var.set(rid)
+        request_id_var.set(rid)
         
         response = self.get_response(request)
         
         response['X-Request-ID'] = rid
         
-        request_id_var.reset(token)
         return response
