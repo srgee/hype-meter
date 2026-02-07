@@ -32,6 +32,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'apps.core.middleware.RequestContextMiddleware',
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -118,12 +120,17 @@ LOGGING = {
             'format': '%(levelname)s %(asctime)s %(name)s %(message)s',
         },
     },
+    'filters': {
+        'request_id_filter': {
+            '()': 'apps.core.log_filters.RequestContextFilter',
+        },
+    },
     'handlers': {
         'stdout': {
             'class': 'logging.StreamHandler',
             'stream': 'ext://sys.stdout',
             'formatter': 'json',
-            'filters': ['require_debug_false'], # Opcional: solo en producción
+            'filters': ['require_debug_false'],
         },
         'stderr': {
             'class': 'logging.StreamHandler',
@@ -146,4 +153,5 @@ LOGGING = {
             'propagate': False,
         },
     },
+
 }
