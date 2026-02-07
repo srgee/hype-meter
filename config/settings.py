@@ -33,7 +33,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'apps.core.middleware.RequestContextMiddleware',
-    
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -130,7 +130,7 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'stream': 'ext://sys.stdout',
             'formatter': 'json',
-            'filters': ['require_debug_false'],
+            'filters': ['request_id_filter'],
         },
         'stderr': {
             'class': 'logging.StreamHandler',
