@@ -15,7 +15,7 @@ def analyze_topic(request):
     
     if not keyword:
         return render(request, 'partials/hype_result_error.html', {
-            'message': 'Por favor, introduce una palabra válida.'
+            'message': 'Please enter a valid word.'
         })
 
     topic = engine.get_hype_report(keyword)
