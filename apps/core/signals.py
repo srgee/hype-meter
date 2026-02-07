@@ -4,4 +4,4 @@ from .context_vars import request_id_var
 
 @receiver(request_finished)
 def clear_logging_context(sender, **kwargs):
-    request_id_var.reset(None)
+    request_id_var.set(None)
