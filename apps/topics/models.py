@@ -2,16 +2,37 @@ from django.db import models
 
 from apps.core.models import TimeStampedModel
 
+import logging
+
+logger = logging.getLogger("apps.topics")
 class TopicManager(models.Manager):
-    '''
+    """
     Manager to encapsulate logic for creating or updating topics.
-    Ensures that data integrity (like lowercase names) is handled 
+    
+    Ensures data integrity (like lowercase names) is handled 
     at the persistence layer.
-    '''
+    """
+
     def update_hype_data(self, keyword, score, history_data):
+        """
+        Updates a topic with the given keyword, score, and history data.
+        
+        Args:
+            keyword (str): The keyword to update.
+            score (float): The new score for the topic.
+            history_data (list): The history data associated with the topic.
+
+        Returns:
+            topic: The updated topic instance.
+
+        Raises:
+            ValueError: If the keyword is empty.
+        """
         clean_keyword = keyword.strip() if keyword else ''
         if len(clean_keyword) == 0:
+            logger.info("empty_keyword_attempted")
             raise ValueError('The keyword (name) cannot be empty.')
+        
         topic, created = self.update_or_create(
             name=clean_keyword.lower(),
             defaults={
@@ -19,7 +40,16 @@ class TopicManager(models.Manager):
                 'history_data': history_data
             }
         )
+        logger.info("topic_data_persisted", extra={
+            "keyword": clean_keyword.lower(),
+            "action": "created" if created else "updated",
+            "score": score,
+            "history_points_data": len(history_data) if history_data else 0,
+            "topic_id": topic.id
+        })
+
         return topic
+ 
 
 class Topic(TimeStampedModel):
     '''
