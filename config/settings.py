@@ -32,9 +32,11 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'apps.core.middleware.RequestContextMiddleware',
-
     'django.middleware.security.SecurityMiddleware',
+
+    'apps.core.middleware.RequestContextMiddleware',
+    'apps.core.middleware.ExceptionSafetyNetMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
