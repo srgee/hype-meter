@@ -4,7 +4,7 @@ from .services import HypeEngine
 from .models import Topic
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("apps.topics")
 
 engine = HypeEngine()
 

@@ -5,7 +5,7 @@ import inspect
 from typing import Any, Callable
 
 # Use specific logger for telemetry
-logger = logging.getLogger("apps.telemetry")
+logger = logging.getLogger("apps.core")
 
 # Define slowness threshold for provider's API calls
 SLA_THRESHOLD_MS = 2000
