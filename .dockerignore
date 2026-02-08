@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*py.class
+*.so
+.Python
+env/
+.env_docker/
+venv/
+.venv/
+build/
+dist/
+*.egg-info/
+
+# Entorno de Desarrollo / IDE
+.vscode/
+*.code-workspace
+.idea/
+*.swp
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+staticfiles/
+media/
+
+# Git y Sistema
+.git/
+.gitignore
+.DS_Store
+.LSOverride
+._*
+
+# Seguridad
+.env
+.env.*
+*.pem
+
+# --- Docker Configs ---
+docker-compose.yml
+docker-compose.*.yml
+Dockerfile
+.dockerignore
