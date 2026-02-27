@@ -1,0 +1,39 @@
+
+# 2026-01-31 18:14:12.389155
++yes
+
+# 2026-01-31 18:18:23.646247
++Goal: Create the database schema and the logic engine (using fake data first)
++
++We have a working Django shell. Now, let's build the Domain Model and the Service Layer.
++
++1.  **The Model (`apps/core/models.py`):**
++    - Create a model named `Topic`.
++    - Fields:
++        - `name`: CharField (unique, indexed).
++        - `score`: IntegerField (0-100).
++        - `status_label`: CharField (choices: VIRAL, NEUTRAL, DEAD).
++        - `history_data`: JSONField (stores the last 7 days of scores for the graph).
++        - `last_updated`: DateTimeField (auto_now=True).
++    - Add a method `is_stale()` that returns `True` if `last_updated` is older than 24 hours.
+
+# 2026-01-31 20:30:59.641536
++list-models gemini/
+
+# 2026-01-31 20:31:17.711162
++/list-models gemini/
+
+# 2026-01-31 20:32:43.773456
++Goal: Create the database schema and the logic engine (using fake data first)
++
++We have a working Django shell. Now, let's build the Domain Model and the Service Layer.
++
++1.  **The Model (`apps/core/models.py`):**
++    - Create a model named `Topic`.
++    - Fields:
++        - `name`: CharField (unique, indexed).
++        - `score`: IntegerField (0-100).
++        - `status_label`: CharField (choices: VIRAL, NEUTRAL, DEAD).
++        - `history_data`: JSONField (stores the last 7 days of scores for the graph).
++        - `last_updated`: DateTimeField (auto_now=True).
++    - Add a method `is_stale()` that returns `True` if `last_updated` is older than 24 hours.
